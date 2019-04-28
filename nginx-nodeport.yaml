@@ -1,0 +1,61 @@
+cloud_user@ip-10-0-1-101:~$ cat nginx-nodeport.yaml 
+apiVersion: v1
+kind: Service 
+metadata: 
+  name: nginx-nodeport
+spec:
+  type: NodePort
+  ports:
+  - protocol: TCP 
+    port: 80
+    targetPort: 80
+    nodePort: 30080
+  selector:
+    app: nginx
+cloud_user@ip-10-0-1-101:~$ 
+
+## Create NodePort
+cloud_user@ip-10-0-1-101:~$ kubectl create -f nginx-nodeport.yaml
+
+## Check the Service 
+cloud_user@ip-10-0-1-101:~$ kubectl get service or 
+NAME             TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
+kubernetes       ClusterIP   10.96.0.1       <none>        443/TCP        129m
+nginx-nodeport   NodePort    10.104.172.49   <none>        80:30080/TCP   3m45s
+cloud_user@ip-10-0-1-101:~$ 
+
+## You can run this command also: 
+cloud_user@ip-10-0-1-101:~$ kubectl get services nginx-nodeport
+NAME             TYPE       CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
+nginx-nodeport   NodePort   10.104.172.49   <none>        80:30080/TCP   6m26s
+cloud_user@ip-10-0-1-101:~$ 
+
+
+
+
+## Curl your website: 
+>Welcome to nginx!</title>
+<style>
+    body {
+        width: 35em;
+        margin: 0 auto;
+        font-family: Tahoma, Verdana, Arial, sans-serif;
+    }
+</style>
+</head>
+<body>
+<h1>Welcome to nginx!</h1>
+<p>If you see this page, the nginx web server is successfully installed and
+working. Further configuration is required.</p>
+
+<p>For online documentation and support please refer to
+<a href="http://nginx.org/">nginx.org</a>.<br/>
+Commercial support is available at
+<a href="http://nginx.com/">nginx.com</a>.</p>
+
+<p><em>Thank you for using nginx.</em></p>
+</body>
+</html>
+cloud_user@ip-10-0-1-101:~$ 
+### 
+
