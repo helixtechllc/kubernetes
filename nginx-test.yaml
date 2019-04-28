@@ -1,3 +1,4 @@
+## Cretae NGINX POD
 cloud_user@ip-10-0-1-101:~$ cat << EOF | kubectl create -f - 
 > apiVersion: v1
 > kind: Pod
@@ -11,12 +12,14 @@ cloud_user@ip-10-0-1-101:~$ cat << EOF | kubectl create -f -
 pod/nginx created
 cloud_user@ip-10-0-1-101:~$ 
 
-### 
+## List all the nodes in the cluster 
 cloud_user@ip-10-0-1-101:~$ kubectl get nodes
 NAME            STATUS   ROLES    AGE   VERSION
 ip-10-0-1-101   Ready    master   98m   v1.13.3
 ip-10-0-1-102   Ready    <none>   98m   v1.13.3
 ip-10-0-1-103   Ready    <none>   98m   v1.13.3
+cloud_user@ip-10-0-1-101:~$
+## List all the pods in all namespaces 
 cloud_user@ip-10-0-1-101:~$ kubectl get pods --all-namespaces
 NAMESPACE     NAME                                    READY   STATUS    RESTARTS   AGE
 default       nginx                                   1/1     Running   0          2m54s
@@ -32,6 +35,9 @@ kube-system   kube-proxy-5q9qc                        1/1     Running   0       
 kube-system   kube-proxy-lzhdg                        1/1     Running   0          98m
 kube-system   kube-proxy-rnzwn                        1/1     Running   0          98m
 kube-system   kube-scheduler-ip-10-0-1-101            1/1     Running   0          97m
+cloud_user@ip-10-0-1-101:~$
+
+## List all the pods in the cluster in details 
 cloud_user@ip-10-0-1-101:~$ kubectl get pods --all-namespaces -o wide
 NAMESPACE     NAME                                    READY   STATUS    RESTARTS   AGE     IP           NODE            NOMINATED NODE   READINESS GATES
 default       nginx                                   1/1     Running   0          3m27s   10.244.1.2   ip-10-0-1-103   <none>           <none>
@@ -47,12 +53,17 @@ kube-system   kube-proxy-5q9qc                        1/1     Running   0       
 kube-system   kube-proxy-lzhdg                        1/1     Running   0          99m     10.0.1.102   ip-10-0-1-102   <none>           <none>
 kube-system   kube-proxy-rnzwn                        1/1     Running   0          99m     10.0.1.101   ip-10-0-1-101   <none>           <none>
 kube-system   kube-scheduler-ip-10-0-1-101            1/1     Running   0          98m     10.0.1.101   ip-10-0-1-101   <none>           <none>
+cloud_user@ip-10-0-1-101:~$
+## Show all the namespaces 
 cloud_user@ip-10-0-1-101:~$ kubectl get namespaces
 NAME          STATUS   AGE
 default       Active   99m
 kube-public   Active   99m
 kube-system   Active   99m
 web           Active   99m
+cloud_user@ip-10-0-1-101:~$
+
+## All detials about the pod nginx 
 cloud_user@ip-10-0-1-101:~$ kubectl describe pod nginx
 Name:               nginx
 Namespace:          default
