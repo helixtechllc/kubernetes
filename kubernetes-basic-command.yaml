@@ -35,3 +35,55 @@ cloud_user@ip-10-0-1-101:~$
 cloud_user@ip-10-0-1-101:~$ kubectl get pods
 No resources found.
 cloud_user@ip-10-0-1-101:~$ 
+
+## Find the IP address of the API server running on the master node
+cloud_user@ip-10-0-1-101:~$ kubectl get pods --all-namespaces -o wide
+NAMESPACE     NAME                                    READY   STATUS    RESTARTS   AGE   IP           NODE            NOMINATED NODE   READINESS GATES
+kube-system   coredns-86c58d9df4-p7dlb                1/1     Running   0          83m   10.244.0.3   ip-10-0-1-101   <none>           <none>
+kube-system   coredns-86c58d9df4-t2drp                1/1     Running   0          83m   10.244.0.2   ip-10-0-1-101   <none>           <none>
+kube-system   etcd-ip-10-0-1-101                      1/1     Running   0          83m   10.0.1.101   ip-10-0-1-101   <none>           <none>
+kube-system   kube-apiserver-ip-10-0-1-101            1/1     Running   0          83m   10.0.1.101   ip-10-0-1-101   <none>           <none>
+kube-system   kube-controller-manager-ip-10-0-1-101   1/1     Running   0          83m   10.0.1.101   ip-10-0-1-101   <none>           <none>
+kube-system   kube-flannel-ds-amd64-64mdl             1/1     Running   0          83m   10.0.1.101   ip-10-0-1-101   <none>           <none>
+kube-system   kube-flannel-ds-amd64-6nmqw             1/1     Running   0          83m   10.0.1.102   ip-10-0-1-102   <none>           <none>
+kube-system   kube-flannel-ds-amd64-sg5rb             1/1     Running   0          83m   10.0.1.103   ip-10-0-1-103   <none>           <none>
+kube-system   kube-proxy-5q9qc                        1/1     Running   0          83m   10.0.1.103   ip-10-0-1-103   <none>           <none>
+kube-system   kube-proxy-lzhdg                        1/1     Running   0          83m   10.0.1.102   ip-10-0-1-102   <none>           <none>
+kube-system   kube-proxy-rnzwn                        1/1     Running   0          83m   10.0.1.101   ip-10-0-1-101   <none>           <none>
+kube-system   kube-scheduler-ip-10-0-1-101            1/1     Running   0          83m   10.0.1.101   ip-10-0-1-101   <none>           <none>
+cloud_user@ip-10-0-1-101:~$ 
+
+## SEe if there are any deployments in this cluster 
+cloud_user@ip-10-0-1-101:~$ kubectl get deployment
+No resources found.
+cloud_user@ip-10-0-1-101:~$ 
+
+## Find the label applied to the etcd pod on the master node 
+cloud_user@ip-10-0-1-101:~$ kubectl get pods --all-namespaces --show-labels -o wide
+NAMESPACE     NAME                                    READY   STATUS    RESTARTS   AGE   IP           NODE            NOMINATED NODE   READINESS GATES  
+ LABELS
+kube-system   coredns-86c58d9df4-p7dlb                1/1     Running   0          87m   10.244.0.3   ip-10-0-1-101   <none>           <none>           
+ k8s-app=kube-dns,pod-template-hash=86c58d9df4
+kube-system   coredns-86c58d9df4-t2drp                1/1     Running   0          87m   10.244.0.2   ip-10-0-1-101   <none>           <none>           
+ k8s-app=kube-dns,pod-template-hash=86c58d9df4
+kube-system   etcd-ip-10-0-1-101                      1/1     Running   0          86m   10.0.1.101   ip-10-0-1-101   <none>           <none>           
+ component=etcd,tier=control-plane
+kube-system   kube-apiserver-ip-10-0-1-101            1/1     Running   0          86m   10.0.1.101   ip-10-0-1-101   <none>           <none>           
+ component=kube-apiserver,tier=control-plane
+kube-system   kube-controller-manager-ip-10-0-1-101   1/1     Running   0          86m   10.0.1.101   ip-10-0-1-101   <none>           <none>           
+ component=kube-controller-manager,tier=control-plane
+kube-system   kube-flannel-ds-amd64-64mdl             1/1     Running   0          86m   10.0.1.101   ip-10-0-1-101   <none>           <none>           
+ app=flannel,controller-revision-hash=5ff48f8dc9,pod-template-generation=1,tier=node
+kube-system   kube-flannel-ds-amd64-6nmqw             1/1     Running   0          86m   10.0.1.102   ip-10-0-1-102   <none>           <none>           
+ app=flannel,controller-revision-hash=5ff48f8dc9,pod-template-generation=1,tier=node
+kube-system   kube-flannel-ds-amd64-sg5rb             1/1     Running   0          86m   10.0.1.103   ip-10-0-1-103   <none>           <none>           
+ app=flannel,controller-revision-hash=5ff48f8dc9,pod-template-generation=1,tier=node
+kube-system   kube-proxy-5q9qc                        1/1     Running   0          87m   10.0.1.103   ip-10-0-1-103   <none>           <none>           
+ controller-revision-hash=6b5dbbc,k8s-app=kube-proxy,pod-template-generation=1
+kube-system   kube-proxy-lzhdg                        1/1     Running   0          86m   10.0.1.102   ip-10-0-1-102   <none>           <none>           
+ controller-revision-hash=6b5dbbc,k8s-app=kube-proxy,pod-template-generation=1
+kube-system   kube-proxy-rnzwn                        1/1     Running   0          87m   10.0.1.101   ip-10-0-1-101   <none>           <none>           
+ controller-revision-hash=6b5dbbc,k8s-app=kube-proxy,pod-template-generation=1
+kube-system   kube-scheduler-ip-10-0-1-101            1/1     Running   0          86m   10.0.1.101   ip-10-0-1-101   <none>           <none>           
+ component=kube-scheduler,tier=control-plane
+cloud_user@ip-10-0-1-101:~$ 
