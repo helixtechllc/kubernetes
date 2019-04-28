@@ -42,8 +42,10 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 # Apply Flannel CNI network overlay:
 kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/bc79dd1505b0c8681ece4de4c0d86c5cd2643275/Documentation/kube-flannel.yml
 
-# Join the worker nodes to the cluster:
-kubeadm join [your unique string from the kubeadm init command]
+# Join the worker nodes to the cluster: (Below command should be run only in Worker node)
+kubeadm join [your unique string from the kubeadm init command] 
+# example: 
+$ kubeadm join 172.31.44.210:6443 --token w320sa.n4xwktpwtc2spe10 --discovery-token-ca-cert-hash sha256:9dc60f33b4adae037c6bf80b3369cb8962233e5d73f985987aa75a65fd41c725
 
 
 # Verify the worker nodes have joined the cluster successfully:
