@@ -87,3 +87,17 @@ kube-system   kube-proxy-rnzwn                        1/1     Running   0       
 kube-system   kube-scheduler-ip-10-0-1-101            1/1     Running   0          86m   10.0.1.101   ip-10-0-1-101   <none>           <none>           
  component=kube-scheduler,tier=control-plane
 cloud_user@ip-10-0-1-101:~$ 
+
+
+### 
+cat << EOF | kubectl create -f -
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+EOF
+
