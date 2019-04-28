@@ -1,0 +1,32 @@
+# List all the nodes in the cluster: 
+cloud_user@ip-10-0-1-101:~$ kubectl get nodes
+NAME            STATUS   ROLES    AGE   VERSION
+ip-10-0-1-101   Ready    master   78m   v1.13.3
+ip-10-0-1-102   Ready    <none>   78m   v1.13.3
+ip-10-0-1-103   Ready    <none>   78m   v1.13.3
+
+# List all the pods in all namespaces 
+cloud_user@ip-10-0-1-101:~$ kubectl get pods --all-namespaces
+NAMESPACE     NAME                                    READY   STATUS    RESTARTS   AGE
+kube-system   coredns-86c58d9df4-p7dlb                1/1     Running   0          78m
+kube-system   coredns-86c58d9df4-t2drp                1/1     Running   0          78m
+kube-system   etcd-ip-10-0-1-101                      1/1     Running   0          77m
+kube-system   kube-apiserver-ip-10-0-1-101            1/1     Running   0          77m
+kube-system   kube-controller-manager-ip-10-0-1-101   1/1     Running   0          77m
+kube-system   kube-flannel-ds-amd64-64mdl             1/1     Running   0          78m
+kube-system   kube-flannel-ds-amd64-6nmqw             1/1     Running   0          78m
+kube-system   kube-flannel-ds-amd64-sg5rb             1/1     Running   0          78m
+kube-system   kube-proxy-5q9qc                        1/1     Running   0          78m
+kube-system   kube-proxy-lzhdg                        1/1     Running   0          78m
+kube-system   kube-proxy-rnzwn                        1/1     Running   0          78m
+kube-system   kube-scheduler-ip-10-0-1-101            1/1     Running   0          77m
+cloud_user@ip-10-0-1-101:~$ 
+
+# List all the namespaces in the cluster 
+cloud_user@ip-10-0-1-101:~$ kubectl get namespaces
+NAME          STATUS   AGE
+default       Active   81m
+kube-public   Active   81m
+kube-system   Active   81m
+web           Active   81m
+cloud_user@ip-10-0-1-101:~$ 
