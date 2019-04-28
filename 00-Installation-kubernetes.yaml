@@ -1,14 +1,16 @@
 Now that we’ve considered all the different types of clusters and where to locate the tools we need to install a cluster, let’s get to it! In this lesson, we will go through the all steps to install a three-node cluster using your Linux Academy cloud servers.
 
-Get the Docker gpg key:
+# Get the Docker gpg key: (All the server) 
 
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-Add the Docker repository:
+$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 
-sudo add-apt-repository    "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+# Add the Docker repository:
+
+``sudo add-apt-repository    "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
    $(lsb_release -cs) \
-   stable"
-Get the Kubernetes gpg key:
+   stable"``
+   
+# Get the Kubernetes gpg key:
 
 curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
 Add the Kubernetes repository:
