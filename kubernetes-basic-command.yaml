@@ -30,3 +30,8 @@ kube-public   Active   81m
 kube-system   Active   81m
 web           Active   81m
 cloud_user@ip-10-0-1-101:~$ 
+
+## Check to see if there are any pods running in the default namespaces
+cloud_user@ip-10-0-1-101:~$ kubectl get pods
+No resources found.
+cloud_user@ip-10-0-1-101:~$ 
