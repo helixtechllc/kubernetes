@@ -1,0 +1,113 @@
+cloud_user@ip-10-0-1-101:~$ cat << EOF | kubectl create -f - 
+> apiVersion: v1
+> kind: Pod
+> metadata:
+>   name: nginx
+> spec:
+>   containers:
+>   - name: ngnix
+>     image: nginx
+> EOF
+pod/nginx created
+cloud_user@ip-10-0-1-101:~$ 
+
+### 
+cloud_user@ip-10-0-1-101:~$ kubectl get nodes
+NAME            STATUS   ROLES    AGE   VERSION
+ip-10-0-1-101   Ready    master   98m   v1.13.3
+ip-10-0-1-102   Ready    <none>   98m   v1.13.3
+ip-10-0-1-103   Ready    <none>   98m   v1.13.3
+cloud_user@ip-10-0-1-101:~$ kubectl get pods --all-namespaces
+NAMESPACE     NAME                                    READY   STATUS    RESTARTS   AGE
+default       nginx                                   1/1     Running   0          2m54s
+kube-system   coredns-86c58d9df4-p7dlb                1/1     Running   0          98m
+kube-system   coredns-86c58d9df4-t2drp                1/1     Running   0          98m
+kube-system   etcd-ip-10-0-1-101                      1/1     Running   0          97m
+kube-system   kube-apiserver-ip-10-0-1-101            1/1     Running   0          97m
+kube-system   kube-controller-manager-ip-10-0-1-101   1/1     Running   0          97m
+kube-system   kube-flannel-ds-amd64-64mdl             1/1     Running   0          98m
+kube-system   kube-flannel-ds-amd64-6nmqw             1/1     Running   0          98m
+kube-system   kube-flannel-ds-amd64-sg5rb             1/1     Running   0          98m
+kube-system   kube-proxy-5q9qc                        1/1     Running   0          98m
+kube-system   kube-proxy-lzhdg                        1/1     Running   0          98m
+kube-system   kube-proxy-rnzwn                        1/1     Running   0          98m
+kube-system   kube-scheduler-ip-10-0-1-101            1/1     Running   0          97m
+cloud_user@ip-10-0-1-101:~$ kubectl get pods --all-namespaces -o wide
+NAMESPACE     NAME                                    READY   STATUS    RESTARTS   AGE     IP           NODE            NOMINATED NODE   READINESS GATES
+default       nginx                                   1/1     Running   0          3m27s   10.244.1.2   ip-10-0-1-103   <none>           <none>
+kube-system   coredns-86c58d9df4-p7dlb                1/1     Running   0          99m     10.244.0.3   ip-10-0-1-101   <none>           <none>
+kube-system   coredns-86c58d9df4-t2drp                1/1     Running   0          99m     10.244.0.2   ip-10-0-1-101   <none>           <none>
+kube-system   etcd-ip-10-0-1-101                      1/1     Running   0          98m     10.0.1.101   ip-10-0-1-101   <none>           <none>
+kube-system   kube-apiserver-ip-10-0-1-101            1/1     Running   0          98m     10.0.1.101   ip-10-0-1-101   <none>           <none>
+kube-system   kube-controller-manager-ip-10-0-1-101   1/1     Running   0          98m     10.0.1.101   ip-10-0-1-101   <none>           <none>
+kube-system   kube-flannel-ds-amd64-64mdl             1/1     Running   0          99m     10.0.1.101   ip-10-0-1-101   <none>           <none>
+kube-system   kube-flannel-ds-amd64-6nmqw             1/1     Running   0          99m     10.0.1.102   ip-10-0-1-102   <none>           <none>
+kube-system   kube-flannel-ds-amd64-sg5rb             1/1     Running   0          99m     10.0.1.103   ip-10-0-1-103   <none>           <none>
+kube-system   kube-proxy-5q9qc                        1/1     Running   0          99m     10.0.1.103   ip-10-0-1-103   <none>           <none>
+kube-system   kube-proxy-lzhdg                        1/1     Running   0          99m     10.0.1.102   ip-10-0-1-102   <none>           <none>
+kube-system   kube-proxy-rnzwn                        1/1     Running   0          99m     10.0.1.101   ip-10-0-1-101   <none>           <none>
+kube-system   kube-scheduler-ip-10-0-1-101            1/1     Running   0          98m     10.0.1.101   ip-10-0-1-101   <none>           <none>
+cloud_user@ip-10-0-1-101:~$ kubectl get namespaces
+NAME          STATUS   AGE
+default       Active   99m
+kube-public   Active   99m
+kube-system   Active   99m
+web           Active   99m
+cloud_user@ip-10-0-1-101:~$ kubectl describe pod nginx
+Name:               nginx
+Namespace:          default
+Priority:           0
+PriorityClassName:  <none>
+Node:               ip-10-0-1-103/10.0.1.103
+Start Time:         Sun, 28 Apr 2019 03:40:43 +0000
+Labels:             <none>
+Annotations:        <none>
+Status:             Running
+IP:                 10.244.1.2
+Containers:
+  ngnix:
+    Container ID:   docker://a1741220426a978c8e602cbf804efdad4008f032030191755034b88198ca22b1
+    Image:          nginx
+    Image ID:       docker-pullable://nginx@sha256:e71b1bf4281f25533cf15e6e5f9be4dac74d2328152edf7ecde23abc54e16c1c
+    Port:           <none>
+    Host Port:      <none>
+    State:          Running
+      Started:      Sun, 28 Apr 2019 03:40:47 +0000
+    Ready:          True
+    Restart Count:  0
+    Environment:    <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from default-token-z6sr8 (ro)
+Conditions:
+  Type              Status
+  Initialized       True 
+  Ready             True 
+  ContainersReady   True 
+  PodScheduled      True 
+Volumes:
+  default-token-z6sr8:
+    Type:        Secret (a volume populated by a Secret)
+    SecretName:  default-token-z6sr8
+    Optional:    false
+QoS Class:       BestEffort
+Node-Selectors:  <none>
+Tolerations:     node.kubernetes.io/not-ready:NoExecute for 300s
+                 node.kubernetes.io/unreachable:NoExecute for 300s
+Events:
+  Type    Reason     Age    From                    Message
+  ----    ------     ----   ----                    -------
+  Normal  Scheduled  4m1s   default-scheduler       Successfully assigned default/nginx to ip-10-0-1-103
+  Normal  Pulling    4m     kubelet, ip-10-0-1-103  pulling image "nginx"
+  Normal  Pulled     3m58s  kubelet, ip-10-0-1-103  Successfully pulled image "nginx"
+  Normal  Created    3m57s  kubelet, ip-10-0-1-103  Created container
+  Normal  Started    3m57s  kubelet, ip-10-0-1-103  Started container
+cloud_user@ip-10-0-1-101:~$ 
+
+### Delete the pods 
+cloud_user@ip-10-0-1-101:~$ kubectl delete pod nginx
+pod "nginx" deleted
+
+cloud_user@ip-10-0-1-101:~$ 
+cloud_user@ip-10-0-1-101:~$ kubectl get pods
+No resources found.
+cloud_user@ip-10-0-1-101:~$ 
