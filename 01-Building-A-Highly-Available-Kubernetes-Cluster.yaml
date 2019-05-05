@@ -3,9 +3,39 @@ You can provide high availability for cluster components by running multiple ins
 
 # View the pods in the default namespace with a custom view:
 $ kubectl get pods -o custom-columns=POD:metadata.name,NODE:spec.nodeName --sort-by spec.nodeName -n kube-system
+### 
+cloud_user@dimdung2c:/etc/kubernetes/pki$ kubectl get pods -o custom-columns=POD:metadata.name,NODE:spec.nodeName --sort-by spec.nodeName -n kube-system
+POD                                                 NODE
+kube-proxy-97mjs                                    dimdung1c.mylabserver.com
+kube-flannel-ds-amd64-9t5qw                         dimdung1c.mylabserver.com
+coredns-86c58d9df4-qfcws                            dimdung2c.mylabserver.com
+coredns-86c58d9df4-qgfqs                            dimdung2c.mylabserver.com
+kube-apiserver-dimdung2c.mylabserver.com            dimdung2c.mylabserver.com
+kube-controller-manager-dimdung2c.mylabserver.com   dimdung2c.mylabserver.com
+kube-flannel-ds-amd64-zvqs8                         dimdung2c.mylabserver.com
+etcd-dimdung2c.mylabserver.com                      dimdung2c.mylabserver.com
+kube-proxy-ps6pr                                    dimdung2c.mylabserver.com
+kube-scheduler-dimdung2c.mylabserver.com            dimdung2c.mylabserver.com
+kube-flannel-ds-amd64-j5mhv                         dimdung3c.mylabserver.com
+kube-proxy-jr94g                                    dimdung3c.mylabserver.com
+cloud_user@dimdung2c:/etc/kubernetes/pki$ 
 
 # View the kube-scheduler YAML:
 $ kubectl get endpoints kube-scheduler -n kube-system -o yaml
+>>> 
+cloud_user@dimdung2c:/etc/kubernetes/pki$ kubectl get endpoints kube-scheduler -n kube-system -o yaml
+apiVersion: v1
+kind: Endpoints
+metadata:
+  annotations:
+    control-plane.alpha.kubernetes.io/leader: '{"holderIdentity":"dimdung2c.mylabserver.com_e32ab69a-6ef1-11e9-8c2a-02745fc5f2f0","leaseDurationSeconds":15,"acquireTime":"2019-05-05T04:55:07Z","renewTime":"2019-05-05T05:11:00Z","leaderTransitions":2}'
+  creationTimestamp: "2019-04-28T05:20:24Z"
+  name: kube-scheduler
+  namespace: kube-system
+  resourceVersion: "48681"
+  selfLink: /api/v1/namespaces/kube-system/endpoints/kube-scheduler
+  uid: 539335c9-6975-11e9-8e8e-02745fc5f2f0
+cloud_user@dimdung2c:/etc/kubernetes/pki$ 
 
 # Create a stacked etcd topology using kubeadm:
 kubeadm init --config=kubeadm-config.yaml
