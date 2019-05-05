@@ -1,0 +1,22 @@
+You can provide high availability for cluster components by running multiple instances — however, some replicated components must remain in standby mode. The scheduler and the controller manager are actively watching the cluster state and take action when it changes. If multiples are running, it creates the possibility of unwarranted duplicates of pods.
+
+
+# View the pods in the default namespace with a custom view:
+$ kubectl get pods -o custom-columns=POD:metadata.name,NODE:spec.nodeName --sort-by spec.nodeName -n kube-system
+
+# View the kube-scheduler YAML:
+$ kubectl get endpoints kube-scheduler -n kube-system -o yaml
+
+# Create a stacked etcd topology using kubeadm:
+kubeadm init --config=kubeadm-config.yaml
+
+# Watch as pods are created in the default namespace:
+kubectl get pods -n kube-system -w
+
+Helpful Links:
+Creating Highly Available Kubernetes Clusters with kubeadm
+- https://kubernetes.io/docs/setup/independent/high-availability/ 
+Highly Available Topologies in Kubernetes
+- https://kubernetes.io/docs/setup/independent/ha-topology/ 
+Operating a Highly Available etcd Cluster 
+- https://kubernetes.io/docs/tasks/administer-cluster/configure-upgrade-etcd/ 
